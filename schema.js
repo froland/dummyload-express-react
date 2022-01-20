@@ -32,4 +32,4 @@ const db_init = async () => {
   }
 };
 
-module.exports = { Instance, db_init }
+module.exports = { Instance, db_init, sequelize }

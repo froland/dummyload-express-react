@@ -1,9 +1,9 @@
-var debug = require('debug')('exam-express-server:app');
+var debug = require("debug")("exam-express-server:app");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const axios = require("axios");
-const {Instance, db_init} = require("./schema");
+const { Instance, db_init, sequelize } = require("./schema");
 
 const app = express();
 
@@ -39,10 +39,19 @@ const getInstanceId = async () => {
 
 (async () => {
   await db_init();
+  app.set("sequelize", sequelize);
   const instanceId = await getInstanceId();
   debug(`Instance id: ${instanceId}`);
-  const [instance, created] = await Instance.findOrCreate({where: {instanceId}});
+  const [instance, created] = await Instance.findOrCreate({
+    where: { instanceId },
+  });
   debug(`Instance primary key: ${instance.id}, created: ${created}`);
+
+  const ping = () => {
+    Instance.increment("pingReceived", { where: { instanceId } });
+  };
+  const timer = setInterval(ping, 20000);
+  app.set("timer", timer);
 })();
 
 module.exports = app;
