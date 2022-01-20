@@ -17,18 +17,19 @@ const Instance = sequelize.define("Instance", {
     allowNull: false,
   },
   pingReceived: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     defaultValue: 0,
   },
 });
 
-(async () => {
+const db_init = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await sequelize.sync({ force: true });
-    //await sequelize.sync();
+    await sequelize.sync();
   } catch (error) {
     console.error("Error with the database:", error);
   }
-})();
+};
+
+module.exports = { Instance, db_init }

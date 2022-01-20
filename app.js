@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const axios = require("axios");
-require("./schema");
+const {Instance, db_init} = require("./schema");
 
 const app = express();
 
@@ -38,6 +38,7 @@ const getInstanceId = async () => {
 };
 
 (async () => {
+  await db_init();
   const instanceId = await getInstanceId();
   debug(`Instance id: ${instanceId}`);
 
