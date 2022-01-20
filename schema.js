@@ -23,7 +23,7 @@ const Instance = sequelize.define("Instance", {
 });
 
 const Flag = sequelize.define("Flag", {
-  name: {
+  flagName: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
@@ -31,6 +31,7 @@ const Flag = sequelize.define("Flag", {
   isSet: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
+    allowNull: false,
   },
 });
 
@@ -38,7 +39,11 @@ const db_init = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await sequelize.sync();
+    if (process.env.NODE_ENV === "development") {
+      await sequelize.sync({ force: true });
+    } else {
+      await sequelize.sync();
+    }
   } catch (error) {
     console.error("Error with the database:", error);
   }

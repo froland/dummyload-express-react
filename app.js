@@ -57,7 +57,7 @@ const getInstanceId = async () => {
     Instance.increment("pingReceived", { where: { instanceId } });
     const [dummyLoad, _] = await Flag.findOrCreate({
       where: {
-        name: "DUMMY_LOAD",
+        flagName: "DUMMY_LOAD",
       },
     });
     if (dummyLoad.isSet && !dummyLoadThread) {
