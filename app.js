@@ -41,7 +41,8 @@ const getInstanceId = async () => {
   await db_init();
   const instanceId = await getInstanceId();
   debug(`Instance id: ${instanceId}`);
-
+  const [instance, created] = await Instance.findOrCreate({where: {instanceId}});
+  debug(`Instance primary key: ${instance.id}, created: ${created}`);
 })();
 
 module.exports = app;
