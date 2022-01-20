@@ -1,10 +1,11 @@
-var debug = require("debug")("exam-express-server:app");
+const debug = require("debug")("exam-express-server:app");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const axios = require("axios");
-const { Instance, db_init, sequelize } = require("./schema");
+const { Flag, Instance, db_init, sequelize } = require("./schema");
 const api = require("./routes/api");
+const { Worker } = require("worker_threads");
 
 const app = express();
 
@@ -50,8 +51,25 @@ const getInstanceId = async () => {
   });
   debug(`Instance primary key: ${instance.id}, created: ${created}`);
 
-  const ping = () => {
+  let dummyLoadThread;
+
+  const ping = async () => {
     Instance.increment("pingReceived", { where: { instanceId } });
+    const [dummyLoad, _] = await Flag.findOrCreate({
+      where: {
+        name: "DUMMY_LOAD",
+      },
+    });
+    if (dummyLoad.isSet && !dummyLoadThread) {
+      debug("Starting dummy load thread");
+      dummyLoadThread = new Worker("./load.js");
+      dummyLoadThread.unref();
+    }
+    if (!dummyLoad.isSet && dummyLoadThread) {
+      debug("Terminating dummy load thread");
+      dummyLoadThread.terminate();
+      dummyLoadThread = null;
+    }
   };
   const timer = setInterval(ping, 20000);
   app.set("timer", timer);

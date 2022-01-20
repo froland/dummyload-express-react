@@ -22,6 +22,18 @@ const Instance = sequelize.define("Instance", {
   },
 });
 
+const Flag = sequelize.define("Flag", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  isSet: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+});
+
 const db_init = async () => {
   try {
     await sequelize.authenticate();
@@ -32,4 +44,4 @@ const db_init = async () => {
   }
 };
 
-module.exports = { Instance, db_init, sequelize }
+module.exports = { Flag, Instance, db_init, sequelize };
