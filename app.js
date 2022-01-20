@@ -4,12 +4,15 @@ const path = require("path");
 const logger = require("morgan");
 const axios = require("axios");
 const { Instance, db_init, sequelize } = require("./schema");
+const api = require("./routes/api");
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api", api);
 
 const getInstanceId = async () => {
   if (process.env.NODE_ENV === "development") {
