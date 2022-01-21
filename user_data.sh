@@ -1,16 +1,17 @@
 #!/bin/bash
+yum install -y git tar
 cat > /tmp/start_server.sh << EOF
 echo "Installing node.js"
 NVM_VERSION=v0.39.1
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash
-. ~/.nvm/nvm.sh
-nvm install --lts --latest-npm
+. ${HOME}/.nvm/nvm.sh
+nvm install --lts
 nvm use --lts
 
 echo "Installing server app"
 git clone https://github.com/froland/dummyload-express-react.git
 cd dummyload-express-react
-npm init
+npm install
 
 echo "Starting server app"
 export NODE_ENV="production"
