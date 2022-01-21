@@ -1,10 +1,13 @@
 #!/bin/bash
+
 yum install -y git tar
 cat > /tmp/start_server.sh << EOF
+cd /home/ec2-user
+
 echo "Installing node.js"
-NVM_VERSION=v0.39.1
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash
-. ${HOME}/.nvm/nvm.sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="/home/ec2-user/.nvm"
+[ -s "\${NVM_DIR}/nvm.sh" ] && . "\${NVM_DIR}/nvm.sh"  # This loads nvm
 nvm install --lts
 nvm use --lts
 
