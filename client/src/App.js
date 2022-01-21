@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useReducer } from "react";
 import axios from "axios";
 import InstanceList from "./InstanceList";
+import DummyLoadControl from "./DummyLoadControl";
 
 const getAsyncInstanceList = async () => {
   return axios.get("/api/instances").then((response) => response.data);
@@ -61,7 +62,8 @@ const App = () => {
   return (
     <main>
       <h1>Instances</h1>
-      <button onClick={handleFetchInstanceList}>Refresh</button>
+      <p><DummyLoadControl /></p>
+      <p><button onClick={handleFetchInstanceList}>Refresh instance list</button></p>
       {instanceList.isLoading ? (
         <div>Loading...</div>
       ) : (
