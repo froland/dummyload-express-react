@@ -1,4 +1,4 @@
-const debug = require("debug")("exam-express-server:app");
+const debug = require("debug")("dummyload-express-react:app");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");

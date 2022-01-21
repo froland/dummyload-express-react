@@ -21,7 +21,7 @@ services:
       DB_DB: postgres
       DB_DIALECT: postgres
       NODE_ENV: development
-      DEBUG: "exam-express-server:*"
+      DEBUG: "dummyload-express-react:*"
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity

@@ -1,4 +1,4 @@
-var debug = require("debug")("exam-express-server:schema");
+var debug = require("debug")("dummyload-express-react:schema");
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize({
