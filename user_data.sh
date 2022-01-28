@@ -14,7 +14,7 @@ nvm use --lts
 echo "Installing server app"
 git clone https://github.com/froland/dummyload-express-react.git
 cd dummyload-express-react
-npm install
+npm build
 
 echo "Starting server app"
 export NODE_ENV="production"
