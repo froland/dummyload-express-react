@@ -25,6 +25,7 @@ const getInstanceId = async () => {
     try {
       const tokenResponse = await axios.put(
         "http://169.254.169.254/latest/api/token",
+        {},
         {
           headers: { "X-aws-ec2-metadata-token-ttl-seconds": "21600" },
         }
