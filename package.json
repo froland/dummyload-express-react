@@ -11,7 +11,7 @@
     "start": "node ./bin/www",
     "build_client": "cd client; npm ci --production; npm run build",
     "build_server": "npm ci --produciton",
-    "build": "npm build_client; npm build_server",
+    "build": "npm run build_client; npm run build_server",
     "debug": "PORT=4000 nodemon --inspect ./bin/www",
     "client": "node start_client.js",
     "server": "node start_server.js",
