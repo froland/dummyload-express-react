@@ -9,7 +9,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "build": "node build_client.js; node build_server.js",
+    "build_client": "cd client; npm ci --production; npm run build",
+    "build_server": "npm ci --produciton",
+    "build": "npm build_client; npm build_server",
     "debug": "PORT=4000 nodemon --inspect ./bin/www",
     "client": "node start_client.js",
     "server": "node start_server.js",
