@@ -24,6 +24,7 @@ export DB_USER="postgres"
 export DB_PASSWORD="postgres"
 export DB_DB="postgres"
 export DB_DIALECT="postgres"
+export PORT=3000
 npm start
 EOF
 chown ec2-user /tmp/start_server.sh
