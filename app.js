@@ -1,15 +1,19 @@
-var debug = require('debug')('exam-express-server:app');
+const debug = require("debug")("dummyload-express-react:app");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const axios = require("axios");
-require("./schema");
+const { Flag, Instance, db_init, sequelize } = require("./schema");
+const api = require("./routes/api");
+const { Worker } = require("worker_threads");
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api", api);
 
 const getInstanceId = async () => {
   if (process.env.NODE_ENV === "development") {
@@ -38,9 +42,37 @@ const getInstanceId = async () => {
 };
 
 (async () => {
+  await db_init();
+  app.set("sequelize", sequelize);
   const instanceId = await getInstanceId();
   debug(`Instance id: ${instanceId}`);
+  const [instance, created] = await Instance.findOrCreate({
+    where: { instanceId },
+  });
+  debug(`Instance primary key: ${instance.id}, created: ${created}`);
 
+  let dummyLoadThread;
+
+  const ping = async () => {
+    Instance.increment("pingReceived", { where: { instanceId } });
+    const [dummyLoad, _] = await Flag.findOrCreate({
+      where: {
+        flagName: "DUMMY_LOAD",
+      },
+    });
+    if (dummyLoad.isSet && !dummyLoadThread) {
+      debug("Starting dummy load thread");
+      dummyLoadThread = new Worker("./load.js");
+      dummyLoadThread.unref();
+    }
+    if (!dummyLoad.isSet && dummyLoadThread) {
+      debug("Terminating dummy load thread");
+      dummyLoadThread.terminate();
+      dummyLoadThread = null;
+    }
+  };
+  const timer = setInterval(ping, 20000);
+  app.set("timer", timer);
 })();
 
 module.exports = app;

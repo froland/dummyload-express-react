@@ -1,2 +1,36 @@
-GET http://localhost:3000/api/hello
+
+GET http://localhost:3000/api/instances
 Content-Type: application/json
+Accept: application/json
+
+###
+
+GET http://localhost:4000/api/env
+Content-Type: application/json
+Accept: application/json
+
+###
+
+GET http://localhost:3000/api/flags/DUMMY_LOAD
+Content-Type: application/json
+Accept: application/json
+
+###
+
+PUT http://localhost:3000/api/flags/DUMMY_LOAD
+Content-Type: application/json
+Accept: application/json
+
+{
+  "value": true
+}
+
+###
+
+PUT http://localhost:3000/api/flags/DUMMY_LOAD
+Content-Type: application/json
+Accept: application/json
+
+{
+  "value": false
+}

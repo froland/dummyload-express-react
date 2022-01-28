@@ -1,4 +1,4 @@
-var debug = require("debug")("exam-express-server:schema");
+var debug = require("debug")("dummyload-express-react:schema");
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize({
@@ -17,18 +17,36 @@ const Instance = sequelize.define("Instance", {
     allowNull: false,
   },
   pingReceived: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     defaultValue: 0,
   },
 });
 
-(async () => {
+const Flag = sequelize.define("Flag", {
+  flagName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  isSet: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
+});
+
+const db_init = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await sequelize.sync({ force: true });
-    //await sequelize.sync();
+    if (process.env.NODE_ENV === "development") {
+      await sequelize.sync({ force: true });
+    } else {
+      await sequelize.sync();
+    }
   } catch (error) {
     console.error("Error with the database:", error);
   }
-})();
+};
+
+module.exports = { Flag, Instance, db_init, sequelize };

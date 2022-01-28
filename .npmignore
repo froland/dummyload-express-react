@@ -1,0 +1,9 @@
+.devcontainer/
+.vscode/
+client/
+http_client/
+node_modules/
+.editorconfig
+.gitignore
+start_client.js
+start_server.js

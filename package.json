@@ -1,15 +1,18 @@
 {
-  "name": "exam-express-server",
+  "name": "dummyload-express-react",
   "author": {
     "name": "François ROLAND",
     "email": "francois.roland@iepscf-uccle.be"
   },
   "license": "UNLICENSED",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon --inspect ./bin/www"
+    "debug": "PORT=4000 nodemon --inspect ./bin/www",
+    "client": "node start_client.js",
+    "server": "node start_server.js",
+    "dev": "concurrently --raw \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "axios": "^0.25.0",
@@ -21,6 +24,12 @@
     "sequelize": "^6.13.0"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
   }
 }
