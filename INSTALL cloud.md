@@ -17,3 +17,4 @@
     -   installer node.js
     -   cloner le repository git
     -   lancer `npm run build` pour télécharger les librairies
+    -   installer `pm2` et s'assurer qu'il démarre bien au redémarrage de l'instance.
