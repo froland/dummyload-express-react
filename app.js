@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api", api);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client", "build")));
+}
 
 const getInstanceId = async () => {
   if (process.env.NODE_ENV === "development") {
@@ -37,6 +40,7 @@ const getInstanceId = async () => {
       return metadataResponse.data;
     } catch (error) {
       console.error(error);
+      return "NOT_FOUND";
     }
   }
 };
