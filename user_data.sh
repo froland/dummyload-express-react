@@ -1,23 +1,11 @@
 #!/bin/bash
 
 yum install -y git tar
-cat > /home/ec2-user/install_server.sh << EOF
 cd /home/ec2-user
-
-echo "Installing node.js"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-export NVM_DIR="/home/ec2-user/.nvm"
-[ -s "\${NVM_DIR}/nvm.sh" ] && . "\${NVM_DIR}/nvm.sh"  # This loads nvm
-nvm install --lts
-nvm use --lts
-
-echo "Installing server app"
 git clone https://github.com/froland/dummyload-express-react.git
-cd dummyload-express-react
-npm run build
-EOF
-chown ec2-user /home/ec2-user/install_server.sh
-su - ec2-user -c "/bin/bash /home/ec2-user/install_server.sh"
+chown -R ec2-user:ec2-user /home/ec2-user/dummyload-express-react
+su - ec2-user -c "/bin/bash /home/ec2-user/dummyload-express-react/install_app.sh"
+
 
 echo "Starting server app"
 export NODE_ENV="production"
