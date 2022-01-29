@@ -7,14 +7,11 @@
 -   Créer un groupe de sécurité sg_web pour l'application server
 -   Créer un groupe de sécurité sg_db pour l'accès DB depuis sg_web
 -   Créer une DB RDS PostgreSQL :
-    -   hostname : dummyload-db.cmeb8rjxmcu1.us-east-1.rds.amazonaws.com
+    -   hostname : _généré par AWS_
     -   port : 5432
-    -   dbname : dummyload-db
+    -   dbname : dummyload
     -   username : postgres
-    -   password : zjYmpwEPuy9Z9U5K6Ga7
+    -   password : _généré par AWS_
 -   Créer une instance EC2 à partir de l'AMI Amazon Linux 2
--   Se connecter en SSH sur l'instance créée
-    -   installer node.js
-    -   cloner le repository git
-    -   lancer `npm run build` pour télécharger les librairies
-    -   installer `pm2` et s'assurer qu'il démarre bien au redémarrage de l'instance.
+    -   user_data : copier user_data.sh et modifier les variables d'environnement
+-   Arrêter l'instance et créer une AMI à partir de l'instance
