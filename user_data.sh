@@ -6,15 +6,21 @@ git clone https://github.com/froland/dummyload-express-react.git
 chown -R ec2-user:ec2-user /home/ec2-user/dummyload-express-react
 su - ec2-user -c "/bin/bash /home/ec2-user/dummyload-express-react/install_app.sh"
 
-cat > /home/ec2-user/dummyload-express-react
+cat > /home/ec2-user/dummyload-express-react/.env <<EOF
+# .env file
+#
+# Adapt to your execution environment.
+#
+DB_DB=dummyload
+DB_DIALECT=postgres
+DB_HOST=dummyload-db.cmeb8rjxmcu1.us-east-1.rds.amazonaws.com
+DB_PASSWORD=SBdQoHz69BsBBWxxsARW
+DB_PORT=5432
+DB_USER=postgres
+NODE_ENV=production
+PORT=3000
+EOF
+chown ec2-user:ec2-user /home/ec2-user/dummyload-express-react/.env
+chmod 0400 /home/ec2-user/dummyload-express-react/.env
 
-echo "Starting server app"
-export NODE_ENV="production"
-export DB_HOST="db"
-export DB_PORT="5432"
-export DB_USER="postgres"
-export DB_PASSWORD="postgres"
-export DB_DB="postgres"
-export DB_DIALECT="postgres"
-export PORT=3000
-npm start
+su - ec2-user -c "/bin/bash /home/ec2-user/dummyload-express-react/start_app.sh"
