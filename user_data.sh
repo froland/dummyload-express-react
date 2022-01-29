@@ -6,6 +6,7 @@ git clone https://github.com/froland/dummyload-express-react.git
 chown -R ec2-user:ec2-user /home/ec2-user/dummyload-express-react
 su - ec2-user -c "/bin/bash /home/ec2-user/dummyload-express-react/install_app.sh"
 
+cat > /home/ec2-user/dummyload-express-react
 
 echo "Starting server app"
 export NODE_ENV="production"
